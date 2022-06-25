@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="page">
+	<section class="portfolio-block">
+		<div class="container">
+			<div class="jumbotron">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 class="display-4">AIDOCS</h1>
+						<p class="lead">
+							AIDOCS is a web based document similarity analyzer aimed to provide users with a variety of
+							different document similarity algorithms to detect and analyze the the closeness between
+							given documents
+						</p>
+						<hr class="my-4">
+						<p class="lead">
+							Start by creating a project
+						</p>
+						<div>
+							<a class="btn get_started_btn" href="{% url 'projects' %}" role="button">Get Started</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</section>
+	<div class="container">
+		<section class="showcase">
+			<div class="container-fluid p-0">
+				<div class="row no-gutters">
+					<div class="col-lg-6 order-lg-2 text-white showcase-img"
+						style="background-image:url('../static/img/landing/img1.jpg');background-size: contain;
+						background-repeat: no-repeat; filter: grayscale(1)">
+						<span></span>
+					</div>
+					<div class="col-lg-6 order-lg-1 showcase-text">
+						<h2 style="text-align:right;">Document Similarity</h2>
+						<p class="lead mb-0" style="text-align:right;">
+							Document similarity is the natural language processing study in which two documents are
+							compared to find the similarity. In this natural language processing process, examining the
+							similarity between words is the most essential part to find the similarity of sentences,
+							texts, documents.
+						</p>
+					</div>
+				</div>
+				<div class="row no-gutters">
+					<div class="col-lg-6 text-white showcase-img"
+						style="background-image:url('../static/img/landing/img2.jpg');background-size: contain;
+						background-repeat: no-repeat; filter: grayscale(1)">
+						<span></span>
+					</div>
+					<div class="col-lg-6 order-lg-1 showcase-text">
+						<h2>How Does it Work?</h2>
+						<p class="lead mb-0">
+							To find the similarity, the feature vectors of the documents are determined and the distance
+							between the features is calculated. Cosine similarity, Euclidean distance, Manhattan
+							distance are used to calculate document similarity.Tf-Idf and Word2Vec are presented as
+							different methods to create features from documents.
+						</p>
+					</div>
+				</div>
+				<div class="row no-gutters">
+					<div class="col-lg-6 order-lg-2 text-white showcase-img" style="background: center;background-size: contain;background-image:url('../static/img/landing/img3.jpg');background-repeat: no-repeat; filter: grayscale(1)">
+						<span></span>
+					</div>
+					<div class="col-lg-6 order-lg-1 showcase-text">
+						<h2 style="text-align:right;">What is it Used For?</h2>
+						<p class="lead mb-0" style="text-align:right;">
+							Many natural language processing applications that calculate the similarity between texts
+							have major significance in book recommendation, news categorization, essay scoring and so
+							on. Document similarity is especially useful to get an overview of a corpus that is new to
+							the user. In addition it helps researchers to pin point documents that are related to their
+							area of researching
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</main>
+{% endblock %}
+
+{% block style %}
+<style>
+	main>.portfolio-block {
+		margin-top: 100px;
+	}
+
+	.header_svg {
+		height: 90%;
+		background-color: white;
+		border-radius: 50%;
+		background-origin: content-box;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-image: url('{% static "img/landing/icon.gif" %}');
+	}
+
+	.get_started_btn {
+		background-color: #272D46;
+		border-color: #272D46;
+		color: white !important;
+		width: 150px;
+		padding: 10px;
+		font-size: 19px;
+	}
+
+	.showcase .showcase-img {
+		min-height: 30rem;
+		background-size: cover;
+	}
+
+	@media (min-width: 768px) {
+		.showcase .showcase-text {
+			padding: 7rem;
+		}
+	}
+
+	@media (max-width: 1200px) {
+		.header_svg {
+			display: none;
+		}
+	}
+
+	.showcase .showcase-text {
+		padding: 2rem;
+	}
+
+	.testimonials {
+		padding-top: 3rem;
+		padding-bottom: 3rem;
+	}
+
+	.testimonials .testimonial-item {
+		max-width: 18rem;
+	}
+
+	.testimonials .testimonial-item img {
+		max-width: 12rem;
+		box-shadow: 0 5px 5px 0 #adb5bd;
+	}
+
+	.jumbotron {
+		background: transparent;
+		border: #272d46 2px solid;
+		text-align: center;
+	}
+
+	.rw1 {
+		margin-bottom: 20px;
+		justify-content: center;
+	}
+
+	.our-team{
+		padding: 5px 15px 10px;
+		background: #fff;
+		border-radius: 15px;
+		text-align: center;
+	}
+	.our-team .pic{
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		background: #fff;
+		padding: 10px;
+		margin-bottom: 25px;
+		transition: all 0.5s ease 0s;
+	}
+	.our-team:hover .pic{
+		background: #272d46;
+		border-radius: 50%;
+	}
+	.pic img{
+		width: 100%;
+		height: auto;
+		border-radius: 50%;
+	}
+	.our-team .title{
+		display: block;
+		font-size: 20px;
+		font-weight: 600;
+		color: #2e282a;
+		text-transform: uppercase;
+		margin: 0 0 7px 0;
+	}
+	.our-team .post{
+		display: block;
+		font-size: 15px;
+		color: #272d46;
+		text-transform: capitalize;
+		margin-bottom: 15px;
+	}
+	.our-team .social{
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+	.our-team .social li{
+		display: inline-block;
+		margin-right: 5px;
+	}
+	.our-team .social li a{
+		display: block;
+		width: 30px;
+		height: 30px;
+		line-height: 30px;
+		border-radius: 50%;
+		font-size: 15px;
+		color: #272d46;
+		border: 1px solid #272d46;
+		transition: all 0.5s ease 0s;
+	}
+	.our-team:hover .social li a{
+		background: #272d46;
+		color: #fff;
+	}
+	@media only screen and (max-width: 990px){
+		.our-team{ margin-bottom: 30px; }
+	}
+</style>
+{% endblock %}

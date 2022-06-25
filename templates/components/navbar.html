@@ -1,0 +1,285 @@
+{% for message in messages %}
+<div
+	class="alert alert-{{ message.tags }} alert-dismissible fade show message_alert"
+	role="alert"
+>
+	<strong>Message:</strong> {{ message }}
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+{% endfor %}
+<nav class="navbar navbar-dark navbar-expand-lg fixed-top portfolio-navbar">
+	<div class="container">
+		<a class="navbar-brand logo" href="{% url 'index' %}">AIDOCS</a>
+		<button
+			data-toggle="collapse"
+			class="navbar-toggler"
+			data-target="#navbarNav"
+		>
+			<span class="sr-only">Toggle navigation</span
+			><span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			{% comment %} <ul class="nav navbar-nav ml-auto">
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" href="{% url 'index' %}">Home</a>
+				</li>
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" href="{% url 'projects' %}">Projects</a>
+				</li>
+				<li class="nav-item pr0" role="presentation">
+					<a class="nav-link" href="#About">About</a>
+				</li>
+			</ul> {% endcomment %}
+		</div>
+		{% if user.is_authenticated %}
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="nav navbar-nav ml-auto">
+				<li class="nav-item" role="presentation">
+					<a class="nav-link text-capitalize usr" href="{% url 'projects' %}">{{ request.user }}</a>
+				</li>
+				<li class="nav-item user" role="presentation">
+					<a
+						class="nav-link btn btn-outline-primary ml-1"
+						href="{% url 'signout' %}"
+						>SignOut</a
+					>
+				</li>
+			</ul>
+		</div>
+		{% else %}
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="nav navbar-nav ml-auto">
+				<li class="nav-item user" role="presentation">
+					<button
+						type="button"
+						class="nav-link btn btn-outline-primary ml-1"
+						data-toggle="modal"
+						data-target="#signin"
+					>
+						SignIn
+					</button>
+				</li>
+				<li class="nav-item user" role="presentation">
+					<button
+						type="button"
+						class="nav-link btn btn-outline-secondary ml-1"
+						data-toggle="modal"
+						data-target="#signup"
+					>
+						SignUp
+					</button>
+				</li>
+			</ul>
+		</div>
+		{% endif %}
+	</div>
+</nav>
+<div
+	class="modal fade"
+	id="signup"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="signup"
+	aria-hidden="true"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="signup">SignUp</h5>
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form
+				enctype="multipart/form-data"
+				method="post"
+				action="{% url 'signup' %}"
+			>
+				<div class="modal-body">
+					{% csrf_token %}
+					<div class="form-group">
+						<label for="user_name"> User Name </label>
+						<input
+							type="text"
+							id="user_name"
+							class="form-control item"
+							name="user_name"
+							placeholder="Create a User Name here"
+						/>
+					</div>
+					<div class="form-group">
+						<label for="first_name"> First Name </label>
+						<input
+							type="text"
+							id="first_name"
+							class="form-control item"
+							name="first_name"
+							placeholder="Enter your First Name here"
+						/>
+					</div>
+					<div class="form-group">
+						<label for="last_name"> Last Name </label>
+						<input
+							type="text"
+							id="last_name"
+							class="form-control item"
+							name="last_name"
+							placeholder="Enter your Last Name here"
+						/>
+					</div>
+					<div class="form-group">
+						<label for="email"> Email </label>
+						<input
+							type="email"
+							id="email"
+							class="form-control item"
+							name="email"
+							placeholder="Enter your email here"
+						/>
+					</div>
+					<div class="form-group">
+						<label for="password1"> Password </label>
+						<input
+							type="password"
+							id="password1"
+							class="form-control item"
+							name="password1"
+							placeholder="Create a Password here"
+						/>
+					</div>
+					<div class="form-group">
+						<label for="password2"> Confirm Password </label>
+						<input
+							type="password"
+							id="password2"
+							class="form-control item"
+							name="password2"
+							placeholder="Confirm Password here"
+						/>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+						Cancel
+					</button>
+					<button type="submit" class="btn btn-primary">SignUp</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div
+	class="modal fade"
+	id="signin"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="signin"
+	aria-hidden="true"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="signin">SignIn</h5>
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form
+				enctype="multipart/form-data"
+				method="post"
+				action="{% url 'signin' %}"
+			>
+				<div class="modal-body">
+					{% csrf_token %}
+					<div class="form-group">
+						<label for="user_name"> User Name </label>
+						<input
+							type="text"
+							id="user_name"
+							class="form-control item"
+							name="user_name"
+							placeholder="Enter your email here"
+						/>
+					</div>
+					<div class="form-group">
+						<label for="password1"> Password </label>
+						<input
+							type="password"
+							id="password1"
+							class="form-control item"
+							name="password1"
+							placeholder="Enter Password here"
+						/>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" 
+					onclick=alert("Please\nContact\nThe\nAdminstrator") 
+					data-dismiss="modal">Forgot Password</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+						Cancel
+					</button>
+					<button type="submit" class="btn btn-primary">SignIn</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% block style %}
+<style>
+	.message_alert {
+		position: fixed !important;
+		bottom: 0 !important;
+		width: 50% !important;
+		background: #272d46 !important;
+		z-index: 1 !important;
+		color: white !important;
+		left: 50% !important;
+	}
+	.alert-error {
+		background: #c53535 !important;
+	}
+	.alert-success {
+		background: #276e33 !important;
+	}
+	nav {
+		background: #272d46;
+	}
+	.user {
+		padding-right: 5px !important;
+	}
+	.user > a {
+		padding-left: 1.5rem !important;
+		padding-right: 1.5rem !important;
+	}
+	.navbar-collapse {
+		flex-grow: 0;
+	}
+	.pr0 {
+		padding-right: 0 !important;
+	}
+
+	ul > li > button {
+		width: 150px;
+	}
+
+	.usr {
+		text-decoration: underline;
+		color: #0ea0ff !important;
+		font-size: 19px;
+		font-weight: 500 !important;
+	}
+</style>
+{% endblock %}

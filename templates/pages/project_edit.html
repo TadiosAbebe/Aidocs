@@ -1,0 +1,247 @@
+{% extends 'base.html' %} {% block style %}
+<style>
+	.card {
+		transition: background, color 200ms, 200ms;
+		/* For modern browsers */
+	}
+
+	.card:hover {
+		border-width: 1px 1px 1px 10px;
+		background: #272d46;
+		color: white;
+		cursor: pointer;
+	}
+
+	.bodycontainer {
+		max-height: 450px;
+		width: 100%;
+		margin: 0;
+		overflow-y: auto;
+	}
+
+	.table-scrollable {
+		margin: 0;
+		padding: 0;
+	}
+
+	.heading {
+		margin-bottom: 15px !important;
+	}
+
+	main {
+		margin-top: 100px;
+		min-height: 100vh;
+	}
+
+	.table-responsive {
+		margin-top: 15px;
+	}
+
+	main {
+		min-height: 100vh;
+	}
+
+	.btn-primary {
+		background-color: #272d46 !important;
+		border-color: #464a5b !important;
+		color: white;
+	}
+
+	.btn-primary:hover {
+		color: white;
+		background-color: #464a5b !important;
+	}
+
+	.btn-primary:focus,
+	.btn-primary:active {
+		box-shadow: 0 0 0 0.2rem rgba(51, 59, 65, 0.25) !important;
+		background-color: #464a5b !important;
+		border-color: #464a5b !important;
+	}
+
+	#file-list {
+		padding: 2.5px;
+	}
+	.card {
+		border: 1px solid #272d46;
+	}
+</style>
+{% endblock %} {% block content %}
+<main class="page project-page">
+	<section class="portfolio-block">
+		<div class="container">
+			<div class="heading">
+				<h2>{{ project.title }}</h2>
+			</div>
+			<div class="row">
+				<div class="col info">
+					<button type="button" class="btn btn-primary">
+						<i class="icon ion-android-document icon"></i> &nbsp;
+						{{project.get_files|length}} Files
+					</button>
+					<!-- Button trigger modal -->
+					{% if user.is_staff or user.is_superuser %}
+					<button
+						type="button"
+						class="btn btn-secondary ml-1"
+						data-toggle="modal"
+						data-target="#fileUploadModal"
+					>
+						<i class="icon ion-android-add icon"></i> &nbsp; Add New Files
+					</button>
+					{% elif project.user_id == user.id %}
+					<button
+						type="button"
+						class="btn btn-secondary ml-1"
+						data-toggle="modal"
+						data-target="#fileUploadModal"
+					>
+						<i class="icon ion-android-add icon"></i> &nbsp; Add New Files
+					</button>
+					{% else %}
+					{% endif %}
+
+					<!-- Modal -->
+					<div
+						class="modal fade"
+						id="fileUploadModal"
+						tabindex="-1"
+						role="dialog"
+						aria-labelledby="fileUploadModalLabel"
+						aria-hidden="true"
+					>
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="fileUploadModalLabel">
+										Upload File
+									</h5>
+									<button
+										type="button"
+										class="close"
+										data-dismiss="modal"
+										aria-label="Close"
+									>
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<form
+									enctype="multipart/form-data"
+									method="post"
+									action="{% url 'add_files' project.id %}"
+								>
+									<div class="modal-body">
+										{% csrf_token %}
+										<div class="form-group">
+											<label for="file-list">
+												File List (allowed files .pdf .txt)
+											</label>
+											<input
+												type="file"
+												id="file-list"
+												class="form-control item"
+												name="files"
+												accept=".pdf,.txt"
+												multiple
+											/>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button
+											type="button"
+											class="btn btn-secondary"
+											data-dismiss="modal"
+										>
+											Close
+										</button>
+										<button type="submit" class="btn btn-primary">
+											Save changes
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					{% if user.is_superuser %}
+					<a
+						href="{% url 'delete_project' project.id %}"
+						type="button"
+						class="btn btn-danger float-right"
+					>
+						<i class="icon ion-android-delete icon"></i> &nbsp; Remove
+					</a>
+					{% elif project.user_id == user.id %}
+					<a
+						href="{% url 'delete_project' project.id %}"
+						type="button"
+						class="btn btn-danger float-right"
+					>
+						<i class="icon ion-android-delete icon"></i> &nbsp; Remove
+					</a>
+					{% else %}
+					{% endif %}
+				</div>
+			</div>
+			{% if project.title == 'Plagiarism Analysis Database' %}
+			<div class="row mt-3">
+				<div class="col">
+					<div class="card">
+						<div class="card-body">
+							<a
+								href="{% url 'apply_similarity_algorithm' project.id 'plagiarism' %}"
+								class="stretched-link"
+							></a>
+							<h4 class="card-title">Detect Plagiarism</h4>
+							<p class="card-text">
+								From here you can select one document that you want to analyze
+								against the corpus to detect plagiarism, during this analysis
+								two algorithums are run against your corpus and their result is
+								averaged.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endif %} {% if project.get_files %}
+			<div class="table-responsive">
+				<table
+					class="table table-hover table-striped table-condensed table-scrollable"
+				>
+					<tbody>
+						{% for file in project.get_files %}
+						<tr>
+							<td class="text-lowercase">{{ file.filename.title }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{% else %}
+			<h1>You have no file in this project</h1>
+			{% endif %} {% if project.title != 'Plagiarism Analysis Database' %}
+			<div class="row mt-3">
+				<div class="col">
+					<div class="card">
+						<div class="card-body">
+							<a
+								href="{% url 'similarity_algorithms' project.id %}"
+								class="stretched-link"
+							></a>
+							<h4 class="card-title">Compute Document Similarity</h4>
+							<p class="card-text">
+								From here you are able to choose one of the different document
+								similarity algorithum based on your preference and use case. You
+								can choose from two types of document vector representation and
+								from three type of evaluating the similarities between this
+								vectors.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</section>
+</main>
+
+{% endblock %}

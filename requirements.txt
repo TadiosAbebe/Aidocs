@@ -1,0 +1,8 @@
+Django==3.0.5
+django-extensions==3.1.5
+gensim==3.8.3
+nltk==3.7
+numpy==1.17.4
+pandas==1.0.3
+pdfminer==20191125
+scikit_learn==1.1.1

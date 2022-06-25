@@ -1,0 +1,73 @@
+{% extends 'base.html' %} {% block style %}
+<style>
+    .card {
+        transition: background, color 200ms, 200ms;
+        /* For modern browsers */
+        background: white;
+        color: black;
+    }
+
+    .card:hover {
+        border-width: 1px 1px 1px 10px;
+        background: #272d46;
+        color: white !important;
+        cursor: pointer;
+    }
+
+    main {
+        margin-top: 100px;
+        min-height: 100vh;
+    }
+
+    .card-body>h3 {
+        font-weight: 500 !important;
+        text-align: center;
+    }
+
+    .project-card-no-image {
+        border-top: 4px solid #272d46;
+        margin-bottom: 30px;
+    }
+</style>
+{% endblock %} {% block content %}
+<main class="page project-page">
+    <section class="portfolio-block project">
+        <div class="container">
+            <div class="project-card-no-image">
+                <h3 style="font-size: 24px">Select Algorithm To Apply</h3>
+
+                <div class="row">
+                    <div class="col-md-6 my-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>TFIDF<br>Cosine Similarity</h3>
+                                <a class="stretched-link"
+                                    href="{% url 'apply_similarity_algorithm' project.id 'tfidf-cos' %}"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 my-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Word2Vec<br>Cosine Similarity</h3>
+                                <a class="stretched-link" href="{% url 'apply_similarity_algorithm' project.id 'word2vec-cos' %}"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 my-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3><br>Plagiarism Detection</h3>
+                                <a class="stretched-link" href="{% url 'apply_similarity_algorithm' project.id 'plagiarism' %}"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
